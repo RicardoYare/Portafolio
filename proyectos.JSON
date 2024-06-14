@@ -1,0 +1,59 @@
+{
+
+    "proyectos":[
+        {
+            "nombre": "Listado de Pacientes para Tablet",
+            "nombreIngles": "Patient List App for Tablet",
+            "video": "imgs/projectsVideo/tabletList.mp4",
+            "techs": ["Java", "Sqlite", "Android"],
+            "descripcion": "Esta es una descripción chorra Esta es una descripción chorra Esta es una descripción chorra Esta es una descripción chorra",
+            "linkGithub": "www.google.com",
+            "linkWeb": ""            
+        },
+        {
+            "nombre": "App Listado de Pacientes <br> para Tablet",
+            "nombreIngles": "Patient List App for Tablet",
+            "video": "imgs/projectsVideo/tabletList.mp4",
+            "techs": ["Java", "Sqlite", "Android"],
+            "descripcion": "que no me ducho que no me ducho que no me ducho que no me ducho que no me ducho que no me ducho que no me ducho",
+            "linkGithub": "true",
+            "linkWeb": "true"            
+        },
+        {
+            "nombre": "App Listado de Pacientes <br> para Tablet",
+            "nombreIngles": "Patient List App for Tablet",
+            "video": "imgs/projectsVideo/tabletList.mp4",
+            "techs": ["Java", "Sqlite", "Android"],
+            "descripcion": "this is no undefined",
+            "linkGithub": "",
+            "linkWeb": ""            
+        },
+        {
+            "nombre": "App Listado de Pacientes <br> para Tablet",
+            "nombreIngles": "Patient List App for Tablet",
+            "video": "imgs/projectsVideo/tabletList.mp4",
+            "techs": ["Java", "Sqlite", "Android"],
+            "descripcion": "ASDASDASD",
+            "linkGithub": "",
+            "linkWeb": ""            
+        },
+        {
+            "nombre": "App Listado de Pacientes <br> para Tablet",
+            "nombreIngles": "Patient List App for Tablet",
+            "video": "imgs/projectsVideo/tabletList.mp4",
+            "techs": ["Java", "Sqlite", "Android"],
+            "descripcion": "ASSSSSSS",
+            "linkGithub": "",
+            "linkWeb": ""            
+        },   {
+            "nombre": "App Listado de Pacientes <br> para Tablet",
+            "nombreIngles": "Patient List App for Tablet",
+            "video": "imgs/projectsVideo/tabletList.mp4",
+            "techs": ["Java", "Sqlite", "Android"],
+            "descripcion": "PEPEPEPEPEPE",
+            "linkGithub": "",
+            "linkWeb": ""            
+        }
+    ]
+
+}

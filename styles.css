@@ -1,0 +1,592 @@
+
+    
+    @import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap');
+
+    body {
+
+        background-color: #FAF7F0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: "Reddit Mono", monospace;
+    }
+    /******************Lateral & Overlay*************/
+    #lateral{
+
+
+        position: fixed;
+        width: 600px;
+        height: 100vh;
+
+        background-color: #FAF7F0;
+
+        right: -600px;
+        top: 0px;
+        transition: 0.5s all;
+        z-index: 30;
+
+        display: grid;
+        border-radius: 10px 0 0 0;
+
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+
+
+    }
+    .latHeader{
+
+        grid-area: 1 / 1 / 2 / 15;
+        background-color: #F1E9D6;
+        border-bottom: 1px solid #E6D8B8;
+        display: flex;  
+        border-radius: 10px 0 0 0;
+
+    }
+
+    .laticons {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 10px;       
+    }
+
+    .lattituloDiv {
+        width: 40%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        opacity: 80%;
+        font-weight: 600;
+        font-size: 16px;
+        color: #4B4A58;
+    }
+
+    .latbarGroup {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #nombreProyecto{        
+        grid-area: 2 / 1 / 3 / 15;
+        
+        display: flex;
+
+        align-items: center;
+        justify-content: center;       
+        font-weight: 800;
+        opacity: 60%;
+        /* padding-top: 20px; */
+        
+    }
+    #latvidContainer{        
+        grid-area: 3 / 2 / 8 / 10; 
+          
+       background-color: black;
+       border: black 1px solid;
+    }
+    #videoLat{
+        height: 100%;
+        width: 100%;
+          
+        
+    }
+    #descripcionProyecto{        
+        grid-area: 8 / 2 / 12 / 10;
+       
+        text-align: justify;
+
+        font-weight: 700;
+        opacity: 70%;
+        padding-top: 20px;
+        font-size: 14px;       
+    }
+    #linksProyectos{        
+        grid-area: 12 / 2 / 13 / 10;   
+        display: flex;     
+    }
+
+    #githubLink{
+       
+        width: 30px;
+        height: 30px;
+        margin: 5px;
+        background-image: url("imgs/techs/github.png");
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        
+        transition: 0.5 all;
+
+        opacity: 90%;
+
+    }
+
+    #webLink{
+        margin: 5px;
+        width: 30px;
+        height: 30px;
+
+        background-image: url("imgs/techs/www.png");
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        transition: 0.5 all;
+        opacity: 90%;
+    }
+
+    #githubLink:hover , #webLink:hover{
+
+        cursor: pointer;
+        transform: scale(1.2);
+        opacity: 100%;
+
+    }
+    
+  
+    #over{
+        position: fixed;
+
+        width: 100%;
+        height: 100vh;
+
+        background-color: black;
+        z-index: 20;
+
+        top: 0px;
+        left: 0px;
+
+        opacity: 40%;
+        display: none;
+    }
+
+    /***************Main Divs***************/
+    #projects {
+
+        width: 1285px;
+        height: 1300px;
+        margin-bottom: 10%;
+
+        border-radius: 10px;
+
+        box-shadow: 1px 5px 10px 1px #C5C3BD;
+        background-color: #FAF7F0;
+
+        display: grid;
+
+        grid-template-columns: repeat(14, 1fr);
+        grid-template-rows: repeat(26, 1fr);
+        
+        display: none;      
+
+    }       
+
+    #init {
+        width: 1285px;
+        height: 400px;
+        margin-top: 70px;
+        margin-bottom: 5%;
+
+        border-radius: 10px;
+
+        box-shadow: 1px 5px 10px 1px #C5C3BD;
+        background-color: #FAF7F0;
+
+        display: grid;
+
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+
+        animation: pop 1s;
+    }
+
+    /**********projects window partes***************/
+
+    /**seleccion de tecnologias**/
+    #techs{
+        grid-area: 3 / 2 / 8 / 14;          
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;        
+
+        border-bottom: 3px solid #F1E9D6;
+
+    }
+
+    .techies{
+        margin: 10px;
+        width: 90px;
+        height: 90px;         
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
+        border: 2px solid transparent;
+        border-radius: 5px;    
+        
+        opacity: 30%;
+    }
+
+    .imgTech{
+        width: 99%;
+        width: 99%;
+        background-color: white;
+        
+    }   
+
+    .techies:hover{
+        cursor: pointer;
+        opacity: 100%;
+    }
+
+    .selected{              
+        opacity: 100%;      
+        background-image: radial-gradient(#42D5B6 0%, #42D5B6 10%,
+        #FFBA7F 7%, #FFBA7F 30%,
+        #FF9C7E 30%, #FF9C7E 50%,
+        #FF8096 50%, #FF8096 70%,
+        #FFCABA 61%);
+        background-size: 200% 200%;
+        animation: bordersMoves 3s alternate infinite;               
+    }  
+
+    #leyendaRight{
+       
+        grid-area: 7 / 2 / 8 / 9;
+
+        color: #4B4A58;
+        font-weight: 700;
+        opacity: 50%;
+
+        display: flex;
+        align-items: end;
+        justify-content: start;        
+        font-size: 13px; 
+    }
+   
+    #leyendaLeft{
+       
+        grid-area: 8 / 9 / 9 / 14;
+
+        color: #4B4A58;
+        font-weight: 700;
+        opacity: 50%;
+
+        display: flex;
+        align-items: start;
+        justify-content: end;        
+        font-size: 13px;         
+
+    }
+
+    #underscore{
+        animation: blink 0.5s infinite;
+    }
+
+
+    /**Proyectos Sección**/
+  
+    #projectWindow{
+        grid-area: 9 / 2 / 26 / 14;      
+        
+        display: grid;      
+        grid-template-columns: repeat(6 , 1fr);  
+        grid-template-rows: repeat(6 , 1fr);  
+        justify-content: center;  
+          
+        border-radius: 5px;  
+       
+        border-bottom: 3px solid #F1E9D6;
+
+       padding: 20px; 
+       padding-left: 30px;    
+          
+                
+    }
+
+    .proyectoContainer{
+        opacity: 0%;
+        margin: 20px;
+        z-index: 0;
+    }
+
+    .proyecto{
+
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+
+        width: 150px;
+        height: 125px;
+
+        /* border: 2px solid rgb(70, 70, 70); */
+        box-shadow:
+            3px 3px 0px 3px rgb(177, 173, 173);
+        border-radius: .5em;
+        transition: all 1s; 
+        border: 1px solid rgba(0,0,0,0.3);        
+        
+
+    }
+
+    .proyecto:hover {
+        transform: scale(135%);
+        box-shadow:
+            6px 8px 0px 3px rgb(206, 202, 202);
+        cursor: pointer;
+        z-index: 10;        
+       
+    }
+
+    .miniHeader {
+
+        grid-area: 1 / 1 / 3 / 12;       
+    
+        opacity: 80%;
+        background-color: #FFCABA;        
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        border-radius: 5px 5px 0 0;
+
+        display: flex;
+        justify-content: end;
+        padding-right: 5px;
+        align-items: center;
+    }
+
+    .videoContenedor {
+
+        grid-area: 4 / 2 / 11 / 10;      
+       
+        border-radius: 5px;
+        display: grid;
+        text-align: center;    
+        align-items: center;     
+        
+        position: relative;        
+
+    }  
+    
+    .video{
+
+        width: 100%;
+        height: 100%;  
+          
+
+    }
+
+    .nombreProject{
+        
+        background-color: rgb(124, 114, 114);
+        width: 100%;
+        height: 100%; 
+        position: absolute;
+
+        display: flex;
+        text-align: center;
+        align-items: center;
+
+        color: white;
+        font-size: 9px;  
+        
+        opacity: 100%;
+        transition: 0.5s all;       
+
+    }
+
+    .miniBotones {
+
+        grid-area: 11 / 1 / 13 / 15;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 6px;
+    }
+
+    .imgHeader {
+        width: 5.8%;
+        height: 40%;
+        margin: 4px;
+        opacity: 70%;
+    }
+
+    .circulosMini{
+
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin: 2px; 
+
+        background-color: #FF825C;
+
+    }
+
+    .imgReproductor {
+        width: 7%;
+        height: 60%;
+        margin-left: 15px;
+        margin-right: 5px;
+        opacity: 70%;
+    }
+   
+
+
+    /************init windows parte***********/
+    #titulo {
+        grid-area: 2 / 1 / 5 / 10;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 20px;
+        font-weight: 600;
+        font-size: 55px;
+        color: #4B4A58;
+    }
+
+    #texto {
+        grid-area: 5 / 1 / 9 / 10;
+
+        text-align: justify;
+
+        padding: 20px;
+        padding-left: 40px;
+        padding-top: 0;
+
+        font-weight: 500;
+        font-size: 16px;
+        color: #3B3B4A;
+    }
+
+    #gadget {
+        grid-area: 2 / 10 / 9 / 13;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        color: #FFCABA;
+        font-weight: 700;
+    }
+
+    #galleta {
+        width: 180px;
+        height: 180px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        visibility: hidden;
+    }
+
+    .textoGalleta {
+        opacity: 0;
+    }
+
+    #botonArea {
+        grid-area: 8 / 1 / 9 / 3;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+    }
+
+    #boton {
+
+        background-color: #FFCABA;
+        padding: 7px;
+        margin-left: -10px;
+        margin-bottom: 35px;
+
+        font-size: 14px;
+        color: #4B4A58;
+        font-weight: bold;
+
+        width: 130px;
+        height: 30px;
+
+        border-radius: 5px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+        transition: all 1s ease-out;
+
+        background-color: #FFCABA;
+        background-image: radial-gradient(#42D5B6 0%, #42D5B6 10%,
+                #FFBA7F 7%, #FFBA7F 30%,
+                #FF9C7E 30%, #FF9C7E 50%,
+                #FF8096 50%, #FF8096 70%,
+                #FFCABA 61%);
+
+        background-repeat: no-repeat;
+        background-position: center;
+
+        opacity: 0;
+    }
+
+    #boton:hover {
+
+        color: white;
+        cursor: grab;
+    }    
+
+    /* The headear parts , para ambas windows*/
+
+    .header {
+        grid-area: 1 / 1 / 2 / 15;
+        background-color: #F1E9D6;
+        border-bottom: 1px solid #E6D8B8;
+        display: flex;            
+    }
+    
+    .icons {
+        width: 10%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .circulo {
+        width: 20px;
+        height: 20px;
+        background-color: #FFCABA;
+        border-radius: 50%;
+        margin: 5px;
+    }
+
+    .tituloDiv {
+        width: 15%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        opacity: 80%;
+        font-weight: 600;
+        font-size: 18px;
+        color: #4B4A58;
+    }
+
+    .barGroup {
+        width: 75%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .barra {
+        width: 98%;
+        height: 4px;
+        border-top: 2px solid #FAF7F0;
+        border-bottom: 3px solid #E6D8B8;
+    }

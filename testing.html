@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap');
+
+        #jeff {
+
+            width: 1000px;
+            height: 1000px;
+
+            border: red 1px solid;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: "Reddit Mono", monospace;
+
+
+        }
+
+        .contenedorBoton {
+
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 5px;
+
+
+        }
+
+        .boton {
+
+            width: 120px;
+            height: 80px;
+
+            background-color: black;
+            transition: 0.5s all;
+            background: #fff0f0;
+            border: 2px solid #b18597;
+
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(0, 0, 0, 0.7);
+
+            font-weight: 800;
+
+        }
+
+        .offset {
+
+            position: absolute;
+
+            top: 14px;
+
+            width: 120px;
+            height: 80px;
+
+            background: #f9c4d2;
+
+            box-shadow: 0 0 0 2px #b18597, 0 0.625em 0 0 #ffe3e2;
+            z-index: -1;
+
+            border-radius: 10px;
+        }
+
+        img {
+
+            width: 45px;
+            height: 45px;
+            margin: 5px;
+
+        }
+
+        /* #boton:hover {
+
+            transform: translateY(6px);
+            background: #ffe9e9;
+        } */
+    </style>
+</head>
+
+<body>
+
+    <div id="jeff">
+        <div class="contenedorBoton">
+            <div class="boton">Java <img src="imgs/techs/java.png"></div>
+            <div class="offset"></div>
+        </div>
+        <div class="contenedorBoton">
+            <div class="boton">SQlite <img src="imgs/techs/sqlite.png"></div>
+            <div class="offset"></div>
+        </div>
+        <div class="contenedorBoton">
+            <div class="boton">Android <img src="imgs/techs/android.png"></div>
+            <div class="offset"></div>
+        </div>
+        <div class="contenedorBoton">
+            <div class="boton">All <img src="imgs/techs/all.png"></div>
+            <div class="offset"></div>
+        </div>
+    </div>
+    <script>
+
+        function crearBotones() {
+
+            let botones = document.querySelectorAll(".boton");
+
+            botones.forEach(element => {
+
+                element.pressed = false;
+
+                function hover() {
+                    if (!element.pressed) {
+                        element.style.transform = "translateY(6px)";
+                        element.style.backgroundColor = "#ffe9e9";
+                    }
+                }
+
+                function hoverOut() {
+                    if (!element.pressed) {
+                        element.style.transform = "translateY(0px)";
+                        element.style.backgroundColor = "#fff0f0";
+                    }
+                }
+
+                element.addEventListener("mouseover", hover);
+                element.addEventListener("mouseout", hoverOut);
+
+                element.addEventListener("click", () => {
+
+                    if (element.pressed == false) {
+
+                        element.style.transform = "translateY(11px)";
+                        element.pressed = true;
+
+
+                    } else {
+                        element.style.transform = "translateY(0px)";
+                        element.pressed = false;
+                    }
+
+                })
+            });
+        }
+
+        crearBotones();
+
+    </script>
+</body>
+
+</html>
