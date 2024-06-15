@@ -168,11 +168,17 @@ function clickBoton() {
         projectWindow.scrollIntoView({ block: "end", behavior: "smooth" });
 
         if (loaded == false) {
-            activeTechBorder();
             loaded = true;
+            interaccionBotones();
 
-             let techs = document.querySelectorAll(".techies");
-             techs[0].classList.add("selected");           
+           
+            let techs = document.querySelectorAll(".boton");
+            techs[0].style.transform = "translateY(11px)";
+            techs[0].style.backgroundColor = "#FADFDF";
+            techs[0].pressed = true;            
+            
+            let offset = techs[0].nextElementSibling;
+            offset.style.boxShadow = "0 0 0 2px #b18597, 0 5px 0 2px #ffe3e2";
             querySelection();
         }
 
@@ -180,119 +186,77 @@ function clickBoton() {
 
 }
 
-
-function activeTechBorder() {//efecto al seleccionar tecnología
-
-    let techs = document.querySelectorAll(".techies");
-
-    techs.forEach(element => {
-
-        element.addEventListener("click", () => {
-
-            element.classList.toggle("selected");
-
-            if (element.id == "all") {
-
-                deSelectAll();
-
-            } else {
-
-                deSelectJustAll();
-            }
-
-
-            querySelection();         
-
-        });
-
-    });
-}
-
-function deSelectAll() {
-
-    let techs = document.querySelectorAll(".techies");
-
-    for (let index = 1; index < techs.length; index++) {
-
-        techs[index].classList.remove("selected");
-
-    }
-
-}
-
-function deSelectJustAll() {
-
-    let techs = document.querySelectorAll(".techies");
-    techs[0].classList.remove("selected");
-
-}
-
 function querySelection() {
 
-    let techs = document.querySelectorAll(".techies.selected");   
-    let projectsGrid = document.querySelector("#projectWindow");   
+    let seleccion = document.querySelectorAll(".boton");
+    let projectsGrid = document.querySelector("#projectWindow");
+    projectsGrid.innerHTML = "";
 
-    projectsGrid.innerHTML = "";    
-    
     fetch('proyectos.json')
-    .then(response => response.json())
-    .then(data => {        
+        .then(response => response.json())
+        .then(data => {
 
-        let speedAnim = 0;
+            let speedAnim = 0;
+            let TechSelectedStrings = [];
 
-        if (techs.length == 0) {
+            seleccion.forEach(element => {
 
-            leyendaUpdate(" 0");
-            return;            
-        }        
-        if(techs[0].id == "all"){
+                if (element.pressed) {
 
-            data.proyectos.forEach(element => {
+                    TechSelectedStrings.push(element.id);
 
-                speedAnim++;
-                cargaProyecto(element.nombre, speedAnim, element.video, 
-                    element.descripcion, element.linkGithub, element.linkWeb)
-                
+                }
+
             });
 
-            leyendaUpdate( " " + data.proyectos.length);
-           
-            return;
-        }              
+            if (TechSelectedStrings.length == 0) {
 
-        let TechSelectedStrings = [];
-        techs.forEach(element => {
-            TechSelectedStrings.push(element.id);
-        });        
-
-        let proyectosCargados = 0
-
-        for (let x = 0; x < data.proyectos.length; x++) {
-
-            let matches = 0;            
-
-            for (let z = 0; z < data.proyectos[x].techs.length; z++) {                
-
-                let condicion = TechSelectedStrings.some(tech => data.proyectos[x].techs[z].includes(tech))
-
-                if (condicion) matches++;                                 
+                leyendaUpdate("0");
+                return;
             }
 
-            if (matches == TechSelectedStrings.length) {  
+            if (TechSelectedStrings[0] == "Todos") {
 
-                speedAnim++;
-                cargaProyecto(data.proyectos[x].nombre, speedAnim, data.proyectos[x].video, 
-                    data.proyectos[x].descripcion, data.proyectos[x].linkGithub, data.proyectos[x].linkWeb);
-                proyectosCargados++                 
-             
-            }            
-        }
+                data.proyectos.forEach(element => {
 
-        leyendaUpdate( " " + proyectosCargados);
+                    speedAnim++;
+                    cargaProyecto(element.nombre, speedAnim, element.video,
+                        element.descripcion, element.linkGithub, element.linkWeb)
 
-    }).catch(error => console.error('Error al cargar el JSON:', error));        
-    
-}  
+                });
+
+                leyendaUpdate(" " + data.proyectos.length);
+
+                return;
+            }
+
+            let proyectosCargados = 0
+
+            for (let x = 0; x < data.proyectos.length; x++) {
+
+                let matches = 0;
+                for (let z = 0; z < data.proyectos[x].techs.length; z++) {
+
+                    let condicion = TechSelectedStrings.some(tech => data.proyectos[x].techs[z].includes(tech))
+
+                    if (condicion) matches++;
+                }
+
+                if (matches == TechSelectedStrings.length) {
+
+                    speedAnim++;
+                    cargaProyecto(data.proyectos[x].nombre, speedAnim, data.proyectos[x].video,
+                        data.proyectos[x].descripcion, data.proyectos[x].linkGithub, data.proyectos[x].linkWeb);
+                    proyectosCargados++
+
+                }
+            }
+
+            leyendaUpdate(" " + proyectosCargados);
+
+        }).catch(error => console.error('Error al cargar el JSON:', error));
+
+}
 
 
 function cargaProyecto(name, speedAnim, videoProject, descripcion, linkGithub, linkWeb) {
@@ -302,112 +266,112 @@ function cargaProyecto(name, speedAnim, videoProject, descripcion, linkGithub, l
     let proyectoContainer = document.createElement("div");
     proyectoContainer.classList.add("proyectoContainer");
 
-        let proyecto = document.createElement("div");
-        proyecto.classList.add("proyecto");
+    let proyecto = document.createElement("div");
+    proyecto.classList.add("proyecto");
 
-            let miniHeader = document.createElement("div");
-                miniHeader.classList.add("miniHeader"); 
-                miniHeader.style.backgroundColor = randomColor();
+    let miniHeader = document.createElement("div");
+    miniHeader.classList.add("miniHeader");
+    miniHeader.style.backgroundColor = randomColor();
 
-                let iconoCircle1 = document.createElement("div");
-                    iconoCircle1.classList.add("circulosMini");
-                    iconoCircle1.style.backgroundColor = randomColor();
-                    
-                let iconoCircle2 = document.createElement("div");
-                    iconoCircle2.classList.add("circulosMini");
-                    iconoCircle2.style.backgroundColor = randomColor();
-                  
-                let iconoCircle3 = document.createElement("div");
-                    iconoCircle3.classList.add("circulosMini");
-                    iconoCircle3.style.backgroundColor = randomColor();
-                    
-                    iconoCircle3.style.marginRight = "60px";
-                
-            miniHeader.appendChild(iconoCircle1);
-            miniHeader.appendChild(iconoCircle2);
-            miniHeader.appendChild(iconoCircle3);
+    let iconoCircle1 = document.createElement("div");
+    iconoCircle1.classList.add("circulosMini");
+    iconoCircle1.style.backgroundColor = randomColor();
 
-                let mini = document.createElement("img");
-                mini.classList.add("imgHeader");
-                mini.src = "imgs/imgRepro/minimizar-signo.png";
-                let square = document.createElement("img");
-                square.classList.add("imgHeader");
-                square.src = "imgs/imgRepro/cuadrado.png";
-                let cerrar = document.createElement("img");
-                cerrar.classList.add("imgHeader");
-                cerrar.src = "imgs/imgRepro/cerrar.png";
+    let iconoCircle2 = document.createElement("div");
+    iconoCircle2.classList.add("circulosMini");
+    iconoCircle2.style.backgroundColor = randomColor();
 
-            miniHeader.appendChild(mini);
-            miniHeader.appendChild(square);
-            miniHeader.appendChild(cerrar);
+    let iconoCircle3 = document.createElement("div");
+    iconoCircle3.classList.add("circulosMini");
+    iconoCircle3.style.backgroundColor = randomColor();
 
-            let videoContenedor = document.createElement("div");
-                videoContenedor.classList.add("videoContenedor");
+    iconoCircle3.style.marginRight = "60px";
 
-                let nombreProject = document.createElement("div")
-                nombreProject.innerHTML = name;
-                nombreProject.classList.add("nombreProject");
+    miniHeader.appendChild(iconoCircle1);
+    miniHeader.appendChild(iconoCircle2);
+    miniHeader.appendChild(iconoCircle3);
 
-                videoContenedor.appendChild(nombreProject);
+    let mini = document.createElement("img");
+    mini.classList.add("imgHeader");
+    mini.src = "imgs/imgRepro/minimizar-signo.png";
+    let square = document.createElement("img");
+    square.classList.add("imgHeader");
+    square.src = "imgs/imgRepro/cuadrado.png";
+    let cerrar = document.createElement("img");
+    cerrar.classList.add("imgHeader");
+    cerrar.src = "imgs/imgRepro/cerrar.png";
 
-                let video = document.createElement("video");
-                video.src = videoProject;
-                video.muted = true;
-                video.classList.add("video");
+    miniHeader.appendChild(mini);
+    miniHeader.appendChild(square);
+    miniHeader.appendChild(cerrar);
 
-                videoContenedor.appendChild(video)                
-                
+    let videoContenedor = document.createElement("div");
+    videoContenedor.classList.add("videoContenedor");
 
-            let miniBotones = document.createElement("div");
-                miniBotones.classList.add("miniBotones");
+    let nombreProject = document.createElement("div")
+    nombreProject.innerHTML = name;
+    nombreProject.classList.add("nombreProject");
 
-                let backbut = document.createElement("img");
-                backbut.classList.add("imgReproductor");
-                backbut.src = "imgs/imgRepro/atras.png";
-                let playbut = document.createElement("img");
-                playbut.classList.add("imgReproductor");
-                playbut.src = "imgs/imgRepro/jugar.png";
-                let nextbut = document.createElement("img");
-                nextbut.classList.add("imgReproductor");
-                nextbut.src = "imgs/imgRepro/siguiente.png";                
+    videoContenedor.appendChild(nombreProject);
 
-            miniBotones.appendChild(backbut);
-            miniBotones.appendChild(playbut);
-            miniBotones.appendChild(nextbut);
+    let video = document.createElement("video");
+    video.src = videoProject;
+    video.muted = true;
+    video.classList.add("video");
 
-        proyecto.appendChild(miniHeader);
-        proyecto.appendChild(videoContenedor);
-        proyecto.appendChild(miniBotones);
+    videoContenedor.appendChild(video)
 
 
-        proyecto.addEventListener("mouseover", () => {        
-            
-            nombreProject.style.opacity = "0%";
-            video.play();           
-            playbut.src = "imgs/imgRepro/pausa.png"
+    let miniBotones = document.createElement("div");
+    miniBotones.classList.add("miniBotones");
 
-        })
+    let backbut = document.createElement("img");
+    backbut.classList.add("imgReproductor");
+    backbut.src = "imgs/imgRepro/atras.png";
+    let playbut = document.createElement("img");
+    playbut.classList.add("imgReproductor");
+    playbut.src = "imgs/imgRepro/jugar.png";
+    let nextbut = document.createElement("img");
+    nextbut.classList.add("imgReproductor");
+    nextbut.src = "imgs/imgRepro/siguiente.png";
 
-        proyecto.addEventListener("mouseout", () => {
-          
-            nombreProject.style.opacity = "100%";
-            video.pause();   
-            playbut.src = "imgs/imgRepro/jugar.png"
+    miniBotones.appendChild(backbut);
+    miniBotones.appendChild(playbut);
+    miniBotones.appendChild(nextbut);
 
-        })
+    proyecto.appendChild(miniHeader);
+    proyecto.appendChild(videoContenedor);
+    proyecto.appendChild(miniBotones);
 
-        proyecto.addEventListener("click", () => {
-          
-            lateral(name, videoProject, descripcion, linkGithub, linkWeb);           
-        })
+
+    proyecto.addEventListener("mouseover", () => {
+
+        nombreProject.style.opacity = "0%";
+        video.play();
+        playbut.src = "imgs/imgRepro/pausa.png"
+
+    })
+
+    proyecto.addEventListener("mouseout", () => {
+
+        nombreProject.style.opacity = "100%";
+        video.pause();
+        playbut.src = "imgs/imgRepro/jugar.png"
+
+    })
+
+    proyecto.addEventListener("click", () => {
+
+        lateral(name, videoProject, descripcion, linkGithub, linkWeb);
+    })
 
     proyectoContainer.appendChild(proyecto);
 
     proyectoContainer.style.animation = "projectPop 1s forwards"
-    proyectoContainer.style.animationDelay = 0.1*speedAnim + "s";
+    proyectoContainer.style.animationDelay = 0.1 * speedAnim + "s";
 
-    proyectoContainer.addEventListener("animationend", () =>{
-       
+    proyectoContainer.addEventListener("animationend", () => {
+
         proyectoContainer.style.opacity = "100%";
         proyectoContainer.style.animationDelay = 0;
 
@@ -417,12 +381,12 @@ function cargaProyecto(name, speedAnim, videoProject, descripcion, linkGithub, l
 
     })
 
-    projectsGrid.appendChild(proyectoContainer);    
-    
+    projectsGrid.appendChild(proyectoContainer);
+
 }
 
 
-function randomColor(){
+function randomColor() {
 
     let random = Math.floor(Math.random() * 6) + 1;
 
@@ -437,22 +401,22 @@ function randomColor(){
             break;
         case 3:
             color = "#FFBA7F";
-         break;
+            break;
         case 4:
             color = "#42D5B6";
-         break;
+            break;
         case 5:
-            color = "#F1E9D6";  
-         break;
+            color = "#F1E9D6";
+            break;
         case 6:
-            color = "#FFCABA";  
-         break;     
+            color = "#FFCABA";
+            break;
         case 7:
             color = "#E6D8B8";
-         break;
+            break;
         case 8:
             color = "#FE997A";
-        break;
+            break;
         default:
             break;
     }
@@ -463,52 +427,52 @@ function randomColor(){
 
 
 
-function leyendaUpdate(seleccion){
+function leyendaUpdate(seleccion) {
 
-    let leyendaSelec = document.querySelector("#textSeleccion");    
+    let leyendaSelec = document.querySelector("#textSeleccion");
 
-    new Promise((resolve, reject) => {         
+    new Promise((resolve, reject) => {
 
-        let intervalo = setInterval(() => {                            
+        let intervalo = setInterval(() => {
 
-            if (leyendaSelec.innerHTML.length == 0) {                
-                
-                clearInterval(intervalo);                 
+            if (leyendaSelec.innerHTML.length == 0) {
+
+                clearInterval(intervalo);
                 resolve();
 
-            }    
-            
-            leyendaSelec.innerHTML = leyendaSelec.innerHTML.substring(0 , leyendaSelec.innerHTML.length -1); 
+            }
+
+            leyendaSelec.innerHTML = leyendaSelec.innerHTML.substring(0, leyendaSelec.innerHTML.length - 1);
 
         }, 50);
 
-    }).then(function () {       
-        
+    }).then(function () {
+
 
         let index = 0;
         let intervalo = setInterval(() => {
 
             leyendaSelec.innerHTML = leyendaSelec.innerHTML + seleccion[index];
-            index++;            
+            index++;
 
             if (index == seleccion.length) {
                 clearInterval(intervalo);
             }
 
-        }, 50); 
+        }, 50);
 
     })
 }
 
 ////////funcion para desplegable lateral
 let intervaloLateral;
-function lateral(tituloPro, videoURLPro, descripcionPro, linkGitPro, linkWebPro ) {    
-    
+function lateral(tituloPro, videoURLPro, descripcionPro, linkGitPro, linkWebPro) {
+
     let lateral = document.querySelector("#lateral");
     lateral.style.right = "0px";
 
     let overlay = document.querySelector("#over");
-    overlay.style.display = "block";    
+    overlay.style.display = "block";
 
     let titulo = document.querySelector("#nombreProyecto");
     let video = document.querySelector("#videoLat");
@@ -521,10 +485,10 @@ function lateral(tituloPro, videoURLPro, descripcionPro, linkGitPro, linkWebPro 
     video.src = videoURLPro;
     video.play();
     video.muted = true;
-    video.loop = true;    
+    video.loop = true;
 
     if (intervaloLateral) {
-        
+
         clearInterval(intervaloLateral);
 
     }
@@ -533,25 +497,25 @@ function lateral(tituloPro, videoURLPro, descripcionPro, linkGitPro, linkWebPro 
     intervaloLateral = setInterval(() => {
 
         descripcion.innerHTML = descripcion.innerHTML + descripcionPro[index];
-        index++;     
+        index++;
 
-        console.log(descripcion.innerHTML-length +" , " + descripcionPro.length)
+        console.log(descripcion.innerHTML - length + " , " + descripcionPro.length)
 
         if (index == descripcionPro.length) {
             clearInterval(intervaloLateral);
             intervaloLateral = null;
         }
 
-    }, 10);  
-    
+    }, 10);
+
     if (!linkGitPro) {
 
-        linkGithub.style.display = "none";        
-        
-    }else{
+        linkGithub.style.display = "none";
+
+    } else {
 
         linkGithub.style.display = "block";
-        linkGithub.addEventListener("click" , () =>{
+        linkGithub.addEventListener("click", () => {
             window.location.href = linkGitPro;
         })
 
@@ -560,29 +524,123 @@ function lateral(tituloPro, videoURLPro, descripcionPro, linkGitPro, linkWebPro 
     if (!linkWebPro) {
 
         linkGitWeb.style.display = "none";
-        
-    }else{
+
+    } else {
 
         linkGitWeb.style.display = "block";
-        linkGitWeb.addEventListener("click" , () =>{
+        linkGitWeb.addEventListener("click", () => {
             window.location.href = linkWebPro;
         })
 
     }
-    
+
 }
 
 let overlay = document.querySelector("#over");
-overlay.addEventListener("click", ()=>{
+overlay.addEventListener("click", () => {
 
     overlay.style.display = "none";
     let lateral = document.querySelector("#lateral");
     lateral.style.right = "-600px";
 
     if (intervaloLateral) {
-        
+
         clearInterval(intervaloLateral);
 
     }
 })
+
+function interaccionBotones() {
+
+    let botones = document.querySelectorAll(".boton");
+
+    botones.forEach(element => {
+
+        element.pressed = false;
+        let offset = element.nextElementSibling;
+
+        function hover() {
+            if (!element.pressed) {
+                element.style.transform = "translateY(6px)";
+                element.style.backgroundColor = "#ffe9e9";
+
+                offset.style.boxShadow = "0 0 0 2px #b18597, 0 7px 0 2px #ffe3e2";
+            }
+        }
+
+        function hoverOut() {
+            if (!element.pressed) {
+                element.style.transform = "translateY(0px)";
+                element.style.backgroundColor = "#fff0f0";
+
+                offset.style.boxShadow = "0 0 0 2px #b18597, 0 11px 0 2px #ffe3e2";
+            }
+        }
+
+        element.addEventListener("mouseover", hover);
+        element.addEventListener("mouseout", hoverOut);
+
+        element.addEventListener("click", () => {
+
+            if (element.pressed == false) {//Cuando seleccionado
+
+                element.style.transform = "translateY(11px)";
+                element.style.backgroundColor = "#FADFDF";
+                element.pressed = true;
+                offset.style.boxShadow = "0 0 0 2px #b18597, 0 5px 0 2px #ffe3e2";
+
+                if (element.id == "Todos") {
+
+                    deSelectAll();
+                    console.log("pase por aqui")
+
+                } else {
+
+                    deSelectJustAll();
+                }
+
+                querySelection();
+
+            } else {
+
+                element.style.transform = "translateY(0px)";
+                element.pressed = false;
+                offset.style.boxShadow = "0 0 0 2px #b18597, 0 10px 0 2px #ffe3e2";
+                querySelection();
+            }
+
+        })
+    });
+}
+
+function deSelectAll() {
+
+    let techs = document.querySelectorAll(".boton");
+
+    for (let index = 1; index < techs.length; index++) {
+
+        let offset = techs[index].nextElementSibling;
+
+        techs[index].style.transform = "translateY(0px)";
+        techs[index].style.backgroundColor = "#fff0f0";
+        techs[index].pressed = false;
+
+        offset.style.boxShadow = "0 0 0 2px #b18597, 0 10px 0 2px #ffe3e2";
+
+    }
+
+}
+
+function deSelectJustAll() {
+
+    let techs = document.querySelectorAll(".boton");
+    techs[0].style.transform = "translateY(0px)";
+    techs[0].style.backgroundColor = "#fff0f0";
+    techs[0].pressed = false;
+
+    let offset = techs[0].nextElementSibling;
+    offset.style.boxShadow = "0 0 0 2px #b18597, 0 10px 0 2px #ffe3e2";
+
+}
+
 

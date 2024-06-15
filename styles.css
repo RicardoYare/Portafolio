@@ -11,6 +11,7 @@
         align-items: center;
         flex-direction: column;
         font-family: "Reddit Mono", monospace;
+        background-image: url("imgs/back2.jpg");
     }
     /******************Lateral & Overlay*************/
     #lateral{
@@ -91,7 +92,7 @@
         grid-area: 3 / 2 / 8 / 10; 
           
        background-color: black;
-       border: black 1px solid;
+       border: #B18597 2px solid;
     }
     #videoLat{
         height: 100%;
@@ -217,50 +218,63 @@
 
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;        
+        justify-content: center;     
+        align-items: start;   
 
         border-bottom: 3px solid #F1E9D6;
+    }
+
+    .contenedorBoton {
+
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px;
+        margin-top: 40px;
+    }
+    .contenedorBoton:hover{
+
+        cursor: pointer;
 
     }
 
-    .techies{
-        margin: 10px;
-        width: 90px;
-        height: 90px;         
+    .boton {
+        width: 120px;
+        height: 80px;
+
+        background-color: black;
+       
+        background: #fff0f0;
+        border: 1px solid #b18597;
+
+        border-radius: 10px;
 
         display: flex;
         justify-content: center;
         align-items: center;
-       
-        border: 2px solid transparent;
-        border-radius: 5px;    
-        
-        opacity: 30%;
+        color: rgba(0, 0, 0, 0.6);
+
+        font-weight: 800;
+        z-index: 20;
+
+        transition: 0.2s all;
     }
 
-    .imgTech{
-        width: 99%;
-        width: 99%;
-        background-color: white;
-        
-    }   
+    .offsetBoton {
+        position: absolute;
+        top: 15px;
+        width: 120px;
+        height: 80px;
 
-    .techies:hover{
-        cursor: pointer;
-        opacity: 100%;
+        background: #FFCABA;
+        box-shadow: 0 0 0 2px #b18597, 0 11px 0 2px #ffe3e2;
+        border-radius: 10px;
+
+        transition: 0.2s all;
     }
 
-    .selected{              
-        opacity: 100%;      
-        background-image: radial-gradient(#42D5B6 0%, #42D5B6 10%,
-        #FFBA7F 7%, #FFBA7F 30%,
-        #FF9C7E 30%, #FF9C7E 50%,
-        #FF8096 50%, #FF8096 70%,
-        #FFCABA 61%);
-        background-size: 200% 200%;
-        animation: bordersMoves 3s alternate infinite;               
-    }  
-
+/***leyenda***********/
     #leyendaRight{
        
         grid-area: 7 / 2 / 8 / 9;
@@ -273,6 +287,8 @@
         align-items: end;
         justify-content: start;        
         font-size: 13px; 
+
+        margin-bottom: 2px;
     }
    
     #leyendaLeft{
@@ -286,7 +302,9 @@
         display: flex;
         align-items: start;
         justify-content: end;        
-        font-size: 13px;         
+        font-size: 13px;      
+        
+        margin-top: 2px;
 
     }
 
@@ -329,13 +347,12 @@
 
         width: 150px;
         height: 125px;
-
-        /* border: 2px solid rgb(70, 70, 70); */
+        
         box-shadow:
-            3px 3px 0px 3px rgb(177, 173, 173);
+            3px 3px 0px 3px #e7d2d1;
         border-radius: .5em;
         transition: all 1s; 
-        border: 1px solid rgba(0,0,0,0.3);        
+        border: 1px solid #B18597;        
         
 
     }
@@ -343,7 +360,7 @@
     .proyecto:hover {
         transform: scale(135%);
         box-shadow:
-            6px 8px 0px 3px rgb(206, 202, 202);
+            6px 8px 0px 3px #FFE3E2;
         cursor: pointer;
         z-index: 10;        
        
@@ -380,8 +397,7 @@
     .video{
 
         width: 100%;
-        height: 100%;  
-          
+        height: 100%;       
 
     }
 
@@ -561,6 +577,8 @@
         background-color: #FFCABA;
         border-radius: 50%;
         margin: 5px;
+
+        box-shadow: 0 2px 1px 0 #FF825C;
     }
 
     .tituloDiv {
